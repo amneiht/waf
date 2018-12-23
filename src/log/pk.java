@@ -1,7 +1,6 @@
 package log;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,6 +83,19 @@ public class pk implements Runnable {
 		sem = true;
 	}
 
+	public static void clear() {
+		// sem = false;// cam cac hoat dong
+		synchronized (brr) {
+			int d = brr.size();
+			for (int i = d - 2; i > 1; i--) {
+
+				brr.remove(i);
+
+			}
+		}
+
+	}
+
 	/**
 	 * 1 la lon hon -1 nho hon 0 bang
 	 * 
@@ -103,31 +115,26 @@ public class pk implements Runnable {
 		return 0;
 	}
 
-
-
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
 			String c = p.getInetAddress().getHostAddress();
 			if (check(c)) {
-				// System.out.println("loai bo"+c);
-				p.close();
-				return;
+				System.out.println("dia chi " + c + " bi block ");
+
 			} else {
 				int v = add(c, arr);
 				if (v > luat.getMaxip()) {
-					System.out.println(v);
-					p.close();
-					// synchronized(brr) // ngan chan tac dong
-					{
-						add(c, brr);
-					}
-				} else {
-					new Thread(new waf(p)).start();
+					add(c, brr);
+					System.out.println("dia chi " + c + " bi block ");
+				} else if (v > luat.getNguong()) {
+					System.out.println("dia chi " + c + " co dau hieu bat thuong ");
 				}
 			}
-		} catch (IOException e) {
+			new Thread(new waf(p)).start();
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -158,6 +165,7 @@ public class pk implements Runnable {
 		}
 		return false;
 	}
+
 	static int bcompare(note a, note b) {
 		if (a.getName() > b.getName())
 			return 1;
