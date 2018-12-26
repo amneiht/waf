@@ -12,6 +12,7 @@ sử dụng thuật toán tim kiếm nhị phân để đọc trong tin được
 nhược thêm 1 đia chỉ ip mới sẽ tốn công hơn để duy trì trật tự trong mảng
 
 bản báo cáo chuẩn trong link dưới
+
 https://drive.google.com/open?id=1TM2f6YF8KMvOs9VzNBhm220H9SYmV5zD
 
 LTU14 -Đặng Công Cẩn
